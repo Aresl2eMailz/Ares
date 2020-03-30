@@ -1,0 +1,38 @@
+#define BLYNK_PRINT Serial
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+int value;
+char auth[] = "GfgqcrcVvvxMcQRqHSPMDJ3rW9MRhk2I";
+int Relay = 5 ; //D1 pin
+
+BLYNK_WRITE(V1){                     
+  int v1 = param.asInt();
+  if(v1 == HIGH){                    
+    digitalWrite(Relay,LOW);         
+     }
+   else{        
+    digitalWrite(Relay,HIGH); ;
+   }
+}
+void setup()
+{
+Serial.begin(9600);
+Blynk.begin(auth, "K", "88888888");
+pinMode(5,OUTPUT); 
+pinMode(Relay,OUTPUT);
+}
+void loop()
+{ 
+value = analogRead(A0);
+Serial.println(value);
+delay(500);
+if (value > 700)
+{ 
+digitalWrite(5, LOW);
+}
+else 
+{ 
+digitalWrite(5, HIGH);
+}
+Blynk.run();
+}
